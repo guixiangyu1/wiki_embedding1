@@ -73,7 +73,7 @@ if __name__ == '__main__':
                         wordtree_candidates = Word_tree.find(word,1)
                         for (_, candidate_word) in wordtree_candidates:
                             candidates += word2wiki_entity[candidate_word]
-                            print(candidates)
+                            # print(candidates)
                     if len(candidates)!=0:
                         entity_matched = process.extractOne(entity_to_be_match, set(candidates))
                         num = entity2num[entity_matched[0]]
