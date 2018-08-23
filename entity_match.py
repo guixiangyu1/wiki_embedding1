@@ -70,10 +70,11 @@ if __name__ == '__main__':
                     f.write("{},{},{},Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
                     for word in entity_to_be_match.split(' '):
-                        bktree_candidates = Word_tree.find(word,1)
-                        candidates += [candidate for (_, candidate) in bktree_candidates]
+                        wordtree_candidates = Word_tree.find(word,1)
+                        for (_, candidate_word) in wordtree_candidates:
+                            candidates += word2wiki_entity[candidate_word]
                     if len(candidates)!=0:
-                        entity_matched = process.extractOne(entity_to_be_match, candidates)
+                        entity_matched = process.extractOne(entity_to_be_match, set(candidates))
                         num = entity2num[entity_matched[0]]
                         f.write("{},{},{},Part_Match\n".format(entity_to_be_match, entity_matched, num))
                     else:
