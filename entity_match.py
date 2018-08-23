@@ -48,22 +48,22 @@ if __name__ == '__main__':
             if len(candidates)!=0:
                 entity_matched = process.extractOne(entity_to_be_match, candidates)
                 num = entity2num[entity_matched[0]]
-                f.write("{} {} {} Abbreviation".format(entity_to_be_match, entity_matched, num))
+                f.write("{} {} {} Abbreviation\n".format(entity_to_be_match, entity_matched, num))
             else:
                 bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 1)
                 candidates = [candidate for (_, candidate) in bktree_candidates]
                 if len(candidates)!=0:
                     entity_matched = process.extractOne(entity_to_be_match, candidates)
                     num = entity2num[entity_matched[0]]
-                    f.write("{} {} {} Appropriate_Match".format(entity_to_be_match, entity_matched, num))
+                    f.write("{} {} {} Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
-                    f.write("{} UNK UNK None".format(entity_to_be_match))
+                    f.write("{} UNK UNK None\n".format(entity_to_be_match))
                     # overlap_candidates = Overlap_tree.find(entity_to_be_match, 19)
                     # candidates = [candidate for (_, candidate) in overlap_candidates]
                     # if len(candidates) != 0:
                     #     entity_matched = process.extractOne(entity_to_be_match, candidates)
                     #     num = entity2num[entity_matched]
-                    #     f.write("{} {} {} Overlap_Match".format(entity_to_be_match, entity_matched, num))
+                    #     f.write("{} {} {} Overlap_Match\n".format(entity_to_be_match, entity_matched, num))
                     # else:
                     #     f.write("{} UNK UNK None".format(entity_to_be_match))
         i += 1
