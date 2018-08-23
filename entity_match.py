@@ -47,7 +47,7 @@ if __name__ == '__main__':
                     candidates.append(long_entity)
             if len(candidates)!=0:
                 entity_matched = process.extractOne(entity_to_be_match, candidates)
-                num = entity2num[entity_matched]
+                num = entity2num[entity_matched[0]]
                 f.write("{} {} {} Abbreviation".format(entity_to_be_match, entity_matched, num))
             else:
                 bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 1)
