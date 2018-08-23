@@ -42,8 +42,8 @@ if __name__ == '__main__':
     for entity_to_be_match in (all_entity - entity_totally_match):
         with open("num_entity_distance.txt", "a") as f:
             for long_entity in entity_totally_match:
-                if partof(entity_to_be_match, entity_totally_match):
-                    candidates.append(entity_totally_match)
+                if partof(entity_to_be_match, long_entity):
+                    candidates.append(long_entity)
             if len(candidates)!=0:
                 entity_matched = process.extractOne(entity_to_be_match, candidates)
                 num = entity2num[entity_matched]
