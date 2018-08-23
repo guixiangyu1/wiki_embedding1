@@ -106,6 +106,6 @@ if __name__ == '__main__':
     # print(len(entity_match), len(all_entity))
     # print(len(entity_match) / len(all_entity))
 
-    read_file("data/WikipediaClean5Negative300Skip10.txt", "tlumacov")
-    read_file("data/glove.6B.300d.txt", "tlumacov")
+    read_file("data/WikipediaClean5Negative300Skip10.txt", "chandraratne")
+    read_file("data/glove.6B.300d.txt", "chandraratne")
 

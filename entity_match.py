@@ -7,7 +7,7 @@ from Levenshtein import distance
 
 if __name__ == '__main__':
     i = 0
-    entity2wiki = {}
+    word2wiki_entity = {}
     all_entity = []
 
     all_words, all_tags = file2list("test.txt")
@@ -24,7 +24,19 @@ if __name__ == '__main__':
     entity2num = {num2entity[num]:num for num in num2entity}
 
     entity_in_wiki = set(num2entity.values())           # entity in wiki
-    print("SET DONE")
+    print("entity_in_wiki Done")
+
+    for entity in entity_in_wiki:
+        for word in entity.split(' '):
+            if word in word2wiki_entity:
+                word2wiki_entity[word] += [entity_in_wiki]
+            else:
+                word2wiki_entity[word] = [entity_in_wiki]
+    entity_word_set = set(word2wiki_entity)
+
+
+
+    print("entity_word_set DONE")
 
     entity_totally_match = all_entity & entity_in_wiki      # entity totally matched in wiki
 
@@ -36,8 +48,8 @@ if __name__ == '__main__':
     Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
     print("Levenshtein_bktree Done")
 
-    # Overlap_tree = pybktree.BKTree(overlap_distance, entity_in_wiki)
-    # print("Overlap_tree Done")
+    Word_tree = pybktree.BKTree(distance, entity_word_set)
+    print("Word_tree Done")
 
     for entity_to_be_match in (all_entity - entity_totally_match):
         candidates = []
@@ -50,7 +62,7 @@ if __name__ == '__main__':
                 num = entity2num[entity_matched[0]]
                 f.write("{},{},{},Abbreviation\n".format(entity_to_be_match, entity_matched, num))
             else:
-                bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 1)
+                bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 2)
                 candidates = [candidate for (_, candidate) in bktree_candidates]
                 if len(candidates)!=0:
                     entity_matched = process.extractOne(entity_to_be_match, candidates)
@@ -58,9 +70,8 @@ if __name__ == '__main__':
                     f.write("{},{},{},Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
                     for word in entity_to_be_match.split(' '):
-                        for long_entity in entity_in_wiki:
-                            if partof(word, long_entity):
-                                candidates.append(long_entity)
+                        bktree_candidates = Word_tree.find(word,1)
+                        candidates += [candidate for (_, candidate) in bktree_candidates]
                     if len(candidates)!=0:
                         entity_matched = process.extractOne(entity_to_be_match, candidates)
                         num = entity2num[entity_matched[0]]
