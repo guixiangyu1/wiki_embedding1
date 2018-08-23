@@ -29,9 +29,9 @@ if __name__ == '__main__':
     for entity in entity_in_wiki:
         for word in entity.split(' '):
             if word in word2wiki_entity:
-                word2wiki_entity[word] += [entity_in_wiki]
+                word2wiki_entity[word] += [entity]
             else:
-                word2wiki_entity[word] = [entity_in_wiki]
+                word2wiki_entity[word] = [entity]
     entity_word_set = set(word2wiki_entity)
 
 
@@ -73,6 +73,7 @@ if __name__ == '__main__':
                         wordtree_candidates = Word_tree.find(word,1)
                         for (_, candidate_word) in wordtree_candidates:
                             candidates += word2wiki_entity[candidate_word]
+                            print(candidates)
                     if len(candidates)!=0:
                         entity_matched = process.extractOne(entity_to_be_match, set(candidates))
                         num = entity2num[entity_matched[0]]
