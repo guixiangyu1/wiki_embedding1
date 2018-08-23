@@ -31,7 +31,7 @@ if __name__ == '__main__':
     with open("num_entity_distance.txt", "w") as f:         # add totally matched entity to file
         for entity in entity_totally_match:
             num = entity2num[entity]
-            f.write("{} {} {} Total_Match\n".format(entity, entity, num))
+            f.write("{},{},{},Total_Match\n".format(entity, entity, num))
 
     Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
     print("Levenshtein_bktree Done")
@@ -48,16 +48,25 @@ if __name__ == '__main__':
             if len(candidates)!=0:
                 entity_matched = process.extractOne(entity_to_be_match, candidates)
                 num = entity2num[entity_matched[0]]
-                f.write("{} {} {} Abbreviation\n".format(entity_to_be_match, entity_matched, num))
+                f.write("{},{},{},Abbreviation\n".format(entity_to_be_match, entity_matched, num))
             else:
-                bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 5)
+                bktree_candidates = Levenshtein_tree.find(entity_to_be_match, 1)
                 candidates = [candidate for (_, candidate) in bktree_candidates]
                 if len(candidates)!=0:
                     entity_matched = process.extractOne(entity_to_be_match, candidates)
                     num = entity2num[entity_matched[0]]
-                    f.write("{} {} {} Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
+                    f.write("{},{},{},Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
-                    f.write("{} UNK UNK None\n".format(entity_to_be_match))
+                    for word in entity_to_be_match.split(' '):
+                        for long_entity in entity_in_wiki:
+                            if partof(word, long_entity):
+                                candidates.append(long_entity)
+                    if len(candidates)!=0:
+                        entity_matched = process.extractOne(entity_to_be_match, candidates)
+                        num = entity2num[entity_matched[0]]
+                        f.write("{},{},{},Part_Match\n".format(entity_to_be_match, entity_matched, num))
+                    else:
+                        f.write("{},UNK,UNK,None\n".format(entity_to_be_match))
                     # overlap_candidates = Overlap_tree.find(entity_to_be_match, 19)
                     # candidates = [candidate for (_, candidate) in overlap_candidates]
                     # if len(candidates) != 0:

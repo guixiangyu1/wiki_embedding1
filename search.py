@@ -88,23 +88,24 @@ def wiki_word(filename):
     return words
 
 if __name__ == '__main__':
-    all_entity = []
-    all_words, all_tags = file2list("test.txt")
+    # all_entity = []
+    # all_words, all_tags = file2list("test.txt")
+    #
+    # for words, tags in zip(all_words, all_tags):
+    #     entity_chunk = get_chunk(tags)
+    #     entitys = word_entity(words, entity_chunk)
+    #     all_entity += entitys
+    # all_entity = set(all_entity)
+    # wiki_entity = set(wiki_word("glove.6B.300d.txt"))
+    #
+    # entity_match = all_entity & wiki_entity
+    #
+    # entity_not_match = all_entity - entity_match
+    # print(entity_not_match)
+    #
+    # print(len(entity_match), len(all_entity))
+    # print(len(entity_match) / len(all_entity))
 
-    for words, tags in zip(all_words, all_tags):
-        entity_chunk = get_chunk(tags)
-        entitys = word_entity(words, entity_chunk)
-        all_entity += entitys
-    all_entity = set(all_entity)
-    wiki_entity = set(wiki_word("glove.6B.300d.txt"))
-
-    entity_match = all_entity & wiki_entity
-
-    entity_not_match = all_entity - entity_match
-    print(entity_not_match)
-
-    print(len(entity_match), len(all_entity))
-    print(len(entity_match) / len(all_entity))
-
-    # read_file("WikipediaClean5Negative300Skip10.txt", "corrado")
+    read_file("data/WikipediaClean5Negative300Skip10.txt", "tlumacov")
+    read_file("data/glove.6B.300d.txt", "tlumacov")
 
