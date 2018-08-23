@@ -20,7 +20,7 @@ if __name__ == '__main__':
     all_entity += entity_in_dataset(all_words, all_tags)
 
     all_entity = set(all_entity)                        # all entity in datasets
-    num2entity = wiki_entity("id_title_map.csv")       # all entity_wiki {index_num:word}
+    num2entity = wiki_entity("data/id_title_map.csv")       # all entity_wiki {index_num:word}
     entity2num = {num2entity[num]:num for num in num2entity}
 
     entity_in_wiki = set(num2entity.values())           # entity in wiki
