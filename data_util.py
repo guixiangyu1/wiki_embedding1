@@ -116,13 +116,14 @@ def overlap_distance(s1,s2):
     return 20-len(s2_words&s1_words)
 
 def partof(s1,s2):
+    indicate = True
     s1_words = set(s1.split(' '))
     s2_words = set(s2.split(' '))
     for s1_word in s1_words:
-        if s1_word in s2_words:
-            return True
-        else:
-            return False
+        if s1_word not in s2_words:
+            indicate = False
+            break
+    return indicate
 
 
 
