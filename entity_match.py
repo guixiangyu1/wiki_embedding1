@@ -33,8 +33,8 @@ if __name__ == '__main__':
             num = entity2num[entity]
             f.write("{} {} {} Total_Match\n".format(entity, entity, num))
 
-    # Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
-    # print("Levenshtein_bktree Done")
+    Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
+    print("Levenshtein_bktree Done")
 
     # Overlap_tree = pybktree.BKTree(overlap_distance, entity_in_wiki)
     # print("Overlap_tree Done")
@@ -54,7 +54,7 @@ if __name__ == '__main__':
                 candidates = [candidate for (_, candidate) in bktree_candidates]
                 if len(candidates)!=0:
                     entity_matched = process.extractOne(entity_to_be_match, candidates)
-                    num = entity2num[entity_matched]
+                    num = entity2num[entity_matched[0]]
                     f.write("{} {} {} Appropriate_Match".format(entity_to_be_match, entity_matched, num))
                 else:
                     f.write("{} UNK UNK None".format(entity_to_be_match))
