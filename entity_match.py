@@ -33,13 +33,14 @@ if __name__ == '__main__':
             num = entity2num[entity]
             f.write("{} {} {} Total_Match\n".format(entity, entity, num))
 
-    Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
-    print("Levenshtein_bktree Done")
+    # Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
+    # print("Levenshtein_bktree Done")
 
     # Overlap_tree = pybktree.BKTree(overlap_distance, entity_in_wiki)
     # print("Overlap_tree Done")
 
     for entity_to_be_match in (all_entity - entity_totally_match):
+        candidates = []
         with open("num_entity_distance.txt", "a") as f:
             for long_entity in entity_totally_match:
                 if partof(entity_to_be_match, long_entity):
