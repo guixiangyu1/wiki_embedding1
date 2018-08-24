@@ -72,7 +72,7 @@ if __name__ == '__main__':
                     f.write("{},{},{},Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
                     for word in re.split(' |-',entity_to_be_match):
-                        wordtree_candidates = Word_tree.find(word,1)
+                        wordtree_candidates = Word_tree.find(word,0)
                         for (_, candidate_word) in wordtree_candidates:
                             candidates += word2wiki_entity[candidate_word]
                             # print(candidates)
