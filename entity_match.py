@@ -4,6 +4,8 @@ from fuzzywuzzy import fuzz
 from fuzzywuzzy import process
 import pybktree
 from Levenshtein import distance
+import re
+
 
 if __name__ == '__main__':
     i = 0
@@ -69,13 +71,14 @@ if __name__ == '__main__':
                     num = entity2num[entity_matched[0]]
                     f.write("{},{},{},Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
-                    for word in entity_to_be_match.split(' '):
+                    for word in re.split(' |-',entity_to_be_match):
                         wordtree_candidates = Word_tree.find(word,1)
                         for (_, candidate_word) in wordtree_candidates:
                             candidates += word2wiki_entity[candidate_word]
                             # print(candidates)
                     if len(candidates)!=0:
-                        entity_matched = process.extractOne(entity_to_be_match, set(candidates))
+                        entity_matched = process.extractOne(entity_to_be_match.replace('-',' '), set(candidates),
+                                                            scorer=fuzz.token_sort_ratio)
                         num = entity2num[entity_matched[0]]
                         f.write("{},{},{},Part_Match\n".format(entity_to_be_match, entity_matched, num))
                     else:
