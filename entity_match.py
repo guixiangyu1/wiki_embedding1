@@ -50,8 +50,8 @@ if __name__ == '__main__':
     Levenshtein_tree = pybktree.BKTree(distance, entity_in_wiki)
     print("Levenshtein_bktree Done")
 
-    Word_tree = pybktree.BKTree(distance, entity_word_set)
-    print("Word_tree Done")
+    # Word_tree = pybktree.BKTree(distance, entity_word_set)
+    # print("Word_tree Done")
 
     for entity_to_be_match in (all_entity - entity_totally_match):
         candidates = []
@@ -71,26 +71,20 @@ if __name__ == '__main__':
                     num = entity2num[entity_matched[0]]
                     f.write("{},,,{},,,{},,,Appropriate_Match\n".format(entity_to_be_match, entity_matched, num))
                 else:
-                    for word in re.split(' |-',entity_to_be_match):
-                        wordtree_candidates = Word_tree.find(word,0)
-                        for (_, candidate_word) in wordtree_candidates:
-                            candidates += word2wiki_entity[candidate_word]
-                            # print(candidates)
-                    if len(candidates)!=0:
-                        entity_matched = process.extractOne(entity_to_be_match.replace('-',' '), set(candidates),
-                                                            scorer=fuzz.token_sort_ratio)
-                        num = entity2num[entity_matched[0]]
-                        f.write("{},,,{},,,{},,,Part_Match\n".format(entity_to_be_match, entity_matched, num))
-                    else:
-                        f.write("{},,,UNK,,,UNK,,,None\n".format(entity_to_be_match))
-                    # overlap_candidates = Overlap_tree.find(entity_to_be_match, 19)
-                    # candidates = [candidate for (_, candidate) in overlap_candidates]
-                    # if len(candidates) != 0:
-                    #     entity_matched = process.extractOne(entity_to_be_match, candidates)
-                    #     num = entity2num[entity_matched]
-                    #     f.write("{} {} {} Overlap_Match\n".format(entity_to_be_match, entity_matched, num))
+                    f.write("{},,,UNK,,,UNK,,,None\n".format(entity_to_be_match))
+                    # for word in re.split(' |-',entity_to_be_match):
+                    #     wordtree_candidates = Word_tree.find(word,0)
+                    #     for (_, candidate_word) in wordtree_candidates:
+                    #         candidates += word2wiki_entity[candidate_word]
+                    #         # print(candidates)
+                    # if len(candidates)!=0:
+                    #     entity_matched = process.extractOne(entity_to_be_match.replace('-',' '), set(candidates),
+                    #                                         scorer=fuzz.token_sort_ratio)
+                    #     num = entity2num[entity_matched[0]]
+                    #     f.write("{},,,{},,,{},,,Part_Match\n".format(entity_to_be_match, entity_matched, num))
                     # else:
-                    #     f.write("{} UNK UNK None".format(entity_to_be_match))
+                    #     f.write("{},,,UNK,,,UNK,,,None\n".format(entity_to_be_match))
+
         i += 1
         print(i)
 
